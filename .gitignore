@@ -1,5 +1,6 @@
 build/
 test_shaders/
+.vscode/
 .vs/
 test.cpp
 example_cmakelists_for_other_projects.txt

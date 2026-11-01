@@ -1,9 +1,12 @@
 #pragma once
 
 #include "../vendors/glad/include/glad/glad.h"
+#include "../vendors/glm/glm/glm.hpp"
 
 #include <vector>
 #include <utility>
+#include <cmath>
+#include <numbers>
 
 class OpenGLModMesh
 {
@@ -25,4 +28,7 @@ public:
     ~OpenGLModMesh();
 
     void draw(unsigned int mode=GL_TRIANGLES) const;
+
+    static OpenGLModMesh circle(float radius, int segments=32, glm::vec3 color=glm::vec3(1.0f), bool filled=true);
+    static OpenGLModMesh ellipse(glm::vec2 radius, int segments=32, glm::vec3 color=glm::vec3(1.0f), bool filled=true);
 };

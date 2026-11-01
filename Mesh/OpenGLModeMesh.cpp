@@ -88,3 +88,51 @@ void OpenGLModMesh::draw(unsigned int mode) const
     }
     glBindVertexArray(0);
 }
+
+OpenGLModMesh OpenGLModMesh::circle(float radius, int segments, glm::vec3 color, bool filled)
+{
+    return ellipse(glm::vec2(radius, radius), segments, color, filled);
+}
+
+OpenGLModMesh OpenGLModMesh::ellipse(glm::vec2 radius, int segments, glm::vec3 color, bool filled)
+{
+    segments = std::max(segments, 3);
+
+    const float two_pi = 2 * std::numbers::pi_v<float>;
+
+    std::vector<float> vertices;
+    std::vector<unsigned int> indices;
+
+    auto push = [&](float x, float y)
+    {
+        vertices.insert(vertices.end(), {x, y, 0.0f, color.r, color.g, color.b});
+    };
+
+    if (filled)
+    {
+        push(0.0f, 0.0f);
+
+        for (int i = 0; i < segments; i++)
+        {
+            float angle = two_pi * static_cast<float>(i) / static_cast<float>(segments);
+            push(radius.x * std::cos(angle), radius.y * std::sin(angle));
+        }
+
+        for (int i = 0; i < segments; i++)
+        {
+            indices.push_back(0);
+            indices.push_back(static_cast<unsigned int>(1 + i));
+            indices.push_back(static_cast<unsigned int>(1 + (1 + i)) % segments);
+        }
+    }
+    else
+    {
+        for(int i = 0; i < segments; i++)
+        {
+            float angle = two_pi * static_cast<float>(i) / static_cast<float>(segments);
+            push(radius.x * std::cos(angle), radius.y * std::sin(angle));
+        }
+    }
+
+    return OpenGLModMesh(vertices, {3, 3}, indices);
+}
