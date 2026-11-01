@@ -80,5 +80,7 @@ public:
 
     glm::mat4 getPixelProjection() const;
 
+    glm::vec2 getCenter();
+
 };
 

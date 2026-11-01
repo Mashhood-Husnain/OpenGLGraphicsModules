@@ -186,6 +186,11 @@ glm::mat4 OpenGLModWindow::getPixelProjection() const
     return glm::ortho(0.0f, static_cast<float>(size.x), static_cast<float>(size.y), 0.0f, -1.0f, 1.0f);
 }
 
+glm::vec2 OpenGLModWindow::getCenter()
+{
+    return glm::vec2(window_size.x / 2.0f, window_size.y / 2.0f);
+}
+
 static const char *kFpsVert = R"(#version 330 core
 layout (location = 0) in vec2 aPos;
 layout (location = 1) in vec3 aColor;
