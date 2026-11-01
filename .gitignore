@@ -1,0 +1,6 @@
+build/
+test_shaders/
+.vs/
+test.cpp
+example_cmakelists_for_other_projects.txt
+*.user
