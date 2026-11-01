@@ -116,3 +116,37 @@ void OpenGLModWindow::terminate()
 {
     glfwSetWindowShouldClose(window_ptr, true);
 }
+
+float OpenGLModWindow::getTime() const
+{
+    return static_cast<float>(glfwGetTime());
+}
+
+float OpenGLModWindow::getDeltaTime() const
+{
+    return delta_time;
+}
+
+glm::ivec2 OpenGLModWindow::getFrameBufferSize() const
+{
+    int w = 0, h = 0;
+    glfwGetFramebufferSize(window_ptr, &w, &h);
+    return glm::ivec2(w, h);
+}
+
+float OpenGLModWindow::getAspectRatio() const
+{
+    glm::ivec2 size = getFrameBufferSize();
+
+    if (size.y == 0) return 1.0f;
+
+    return static_cast<float>(size.x) / static_cast<float>(size.y);
+}
+
+glm::mat4 OpenGLModWindow::getOrthoProjection() const
+{
+    float aspect = getAspectRatio();
+
+    return glm::ortho(-aspect, aspect, -1.0f, 1.0f, -1.0f, 1.0f);
+
+}

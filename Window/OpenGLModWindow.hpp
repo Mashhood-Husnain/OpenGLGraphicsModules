@@ -3,6 +3,7 @@
 #include "../vendors/glad/include/glad/glad.h"
 #include "../vendors/GLFW/include/GLFW/glfw3.h"
 #include "../vendors/glm/glm/glm.hpp"
+#include "../vendors/glm/glm/gtc/matrix_transform.hpp"
 
 #include <string>
 #include <iostream>
@@ -16,6 +17,9 @@ class OpenGLModWindow
     glm::ivec2 window_size;
 
     bool depth_test = false;
+
+    float last_frame_time = 0.0f;
+    float delta_time = 0.0f;
 
     void glfwWindowHints();
     bool initWindow(std::string title, glm::vec2 size);
@@ -45,5 +49,12 @@ public:
     void setDepthTest(bool mode=true);
     
     void terminate();
+
+    float getTime() const;
+    float getDeltaTime() const;
+    glm::ivec2 getFrameBufferSize() const;
+    float getAspectRatio() const;
+    glm::mat4 getOrthoProjection() const;
+
 };
 
