@@ -47,6 +47,7 @@ public:
     void setWindowTitle(std::string window_title);
 
     void setDepthTest(bool mode=true);
+    void setBlending(bool mode=true);
     
     void terminate();
 

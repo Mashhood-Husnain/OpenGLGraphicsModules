@@ -108,8 +108,25 @@ void OpenGLModWindow::setDepthTest(bool mode)
 {
     depth_test = mode;
 
-    if (mode) glEnable(GL_DEPTH_TEST);
-    else glDisable(GL_DEPTH_TEST);
+    if (mode)
+    {
+        glEnable(GL_DEPTH_TEST);
+        return;
+    }
+    
+    glDisable(GL_DEPTH_TEST);
+}
+
+void OpenGLModWindow::setBlending(bool mode)
+{
+    if (mode)
+    {
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        return;
+    }
+
+    glDisable(GL_BLEND);
 }
 
 void OpenGLModWindow::terminate()

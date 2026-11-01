@@ -50,7 +50,7 @@ public:
     {
         use();
         setMat4("uModel", obj.modelMatrix());
-        setVec3("uTint", obj.tint);
+        setVec4("uTint", obj.tint);
 
         obj.draw();
     }
