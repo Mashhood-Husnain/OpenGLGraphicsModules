@@ -40,6 +40,10 @@ OpenGLModMesh::OpenGLModMesh(
 }
 
 OpenGLModMesh::OpenGLModMesh(OpenGLModMesh&& other) noexcept :
+    position(other.position),
+    scale(other.scale),
+    rotation(other.rotation),
+    tint(other.tint),
     vao(std::exchange(other.vao, 0)),
     vbo(std::exchange(other.vbo, 0)),
     ebo(std::exchange(other.ebo, 0)),
@@ -51,6 +55,10 @@ OpenGLModMesh& OpenGLModMesh::operator=(OpenGLModMesh&& other) noexcept
     if (this != &other)
     {
         release();
+        position = other.position;
+        scale = other.scale;
+        rotation = other.rotation;
+        tint = other.tint;
         vao = std::exchange(other.vao, 0);
         vbo = std::exchange(other.vbo, 0);
         ebo = std::exchange(other.ebo, 0);
@@ -87,6 +95,15 @@ void OpenGLModMesh::draw(unsigned int mode) const
         glDrawArrays(mode, 0, vertex_count);
     }
     glBindVertexArray(0);
+}
+
+glm::mat4 OpenGLModMesh::modelMatrix() const
+{
+    glm::mat4 model = glm::translate(glm::mat4(1.0f), position);
+    model = glm::rotate(model, rotation, glm::vec3(0.0f, 0.0f, 1.0f));
+    model = glm::scale(model, scale);
+
+    return model;
 }
 
 OpenGLModMesh OpenGLModMesh::circle(float radius, int segments, glm::vec3 color, bool filled)

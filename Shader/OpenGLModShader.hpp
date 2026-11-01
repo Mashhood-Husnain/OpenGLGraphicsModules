@@ -44,4 +44,14 @@ public:
     void setVec4(const std::string &name, const glm::vec4 &v);
     void setMat3(const std::string &name, const glm::mat3 &m);
     void setMat4(const std::string &name, const glm::mat4 &m);
+
+    template<typename Drawable>
+    void draw(const Drawable &obj)
+    {
+        use();
+        setMat4("uModel", obj.modelMatrix());
+        setVec3("uTint", obj.tint);
+
+        obj.draw();
+    }
 };
