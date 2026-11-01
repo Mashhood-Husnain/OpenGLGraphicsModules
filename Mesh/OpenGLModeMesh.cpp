@@ -97,6 +97,11 @@ void OpenGLModMesh::draw(unsigned int mode) const
     glBindVertexArray(0);
 }
 
+void OpenGLModMesh::draw() const
+{
+    draw(draw_mode);
+}
+
 glm::mat4 OpenGLModMesh::modelMatrix() const
 {
     glm::mat4 model = glm::translate(glm::mat4(1.0f), position);
@@ -139,7 +144,7 @@ OpenGLModMesh OpenGLModMesh::ellipse(glm::vec2 radius, int segments, glm::vec3 c
         {
             indices.push_back(0);
             indices.push_back(static_cast<unsigned int>(1 + i));
-            indices.push_back(static_cast<unsigned int>(1 + (1 + i)) % segments);
+            indices.push_back(static_cast<unsigned int>(1 + (1 + i) % segments));
         }
     }
     else
@@ -151,5 +156,8 @@ OpenGLModMesh OpenGLModMesh::ellipse(glm::vec2 radius, int segments, glm::vec3 c
         }
     }
 
-    return OpenGLModMesh(vertices, {3, 3}, indices);
+    OpenGLModMesh mesh(vertices, {3, 3}, indices);
+    if (!filled) mesh.draw_mode = GL_LINE_LOOP;
+    
+    return mesh;
 }

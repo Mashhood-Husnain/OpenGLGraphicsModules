@@ -24,6 +24,7 @@ public:
     glm::vec3 scale{1.0f};
     float rotation = 0.0f;
     glm::vec3 tint{1.0f};
+    unsigned int draw_mode = GL_TRIANGLES;
 
     OpenGLModMesh(const OpenGLModMesh&) = delete;
     OpenGLModMesh& operator=(const OpenGLModMesh&) = delete;
@@ -33,7 +34,8 @@ public:
     OpenGLModMesh(const std::vector<float> &vertices, const std::vector<int> &attributes, const std::vector<unsigned int> &indices={});
     ~OpenGLModMesh();
 
-    void draw(unsigned int mode=GL_TRIANGLES) const;
+    void draw(unsigned int mode) const;
+    void draw() const;
 
     static OpenGLModMesh circle(float radius, int segments=32, glm::vec3 color=glm::vec3(1.0f), bool filled=true);
     static OpenGLModMesh ellipse(glm::vec2 radius, int segments=32, glm::vec3 color=glm::vec3(1.0f), bool filled=true);

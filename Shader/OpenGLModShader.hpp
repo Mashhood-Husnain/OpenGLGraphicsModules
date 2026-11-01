@@ -15,7 +15,7 @@
 
 class OpenGLModShader
 {
-    unsigned int shader_program;
+    unsigned int shader_program = 0;
     std::unordered_map<std::string, int> uniform_cache;
 
     static bool checkError(unsigned int shader, std::string error_type, std::string type);
