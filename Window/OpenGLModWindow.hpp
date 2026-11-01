@@ -78,5 +78,7 @@ public:
     float getAspectRatio() const;
     glm::mat4 getOrthoProjection() const;
 
+    glm::mat4 getPixelProjection() const;
+
 };
 
