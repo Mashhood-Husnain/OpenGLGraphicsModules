@@ -8,6 +8,12 @@
 #include <string>
 #include <iostream>
 #include <functional>
+#include <memory>
+#include <vector>
+#include <iterator>
+#include <cstdlib>
+
+class OpenGLModShader;
 
 class OpenGLModWindow
 {
@@ -20,6 +26,19 @@ class OpenGLModWindow
 
     float last_frame_time = 0.0f;
     float delta_time = 0.0f;
+
+    bool show_fps = false;
+    int fps_frames = 0;
+    int fps_value = 0;
+    double fps_timer_start = 0.0;
+
+    std::unique_ptr<OpenGLModShader> fps_shader;
+    unsigned int fps_vao = 0;
+    unsigned int fps_vbo = 0;
+
+    void initFPSOverlay();
+    void drawFPS();
+    void releaseFPS();
 
     void glfwWindowHints();
     bool initWindow(std::string title, glm::vec2 size);
@@ -49,6 +68,8 @@ public:
     void setDepthTest(bool mode=true);
     void setBlending(bool mode=true);
     
+    void showFPS(bool show=true);
+
     void terminate();
 
     float getTime() const;

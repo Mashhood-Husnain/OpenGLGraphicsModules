@@ -18,6 +18,9 @@ class OpenGLModShader
     unsigned int shader_program = 0;
     std::unordered_map<std::string, int> uniform_cache;
 
+    OpenGLModShader() = default;
+    bool build(const std::string &vs_src, const std::string &fs_src);
+
     static bool checkError(unsigned int shader, std::string error_type, std::string type);
     static bool readFile(const std::string &path, std::string &out);
     static unsigned int compile(unsigned int type, const std::string &source, std::string label);
@@ -30,6 +33,8 @@ public:
     OpenGLModShader &operator=(OpenGLModShader &&other) noexcept;
 
     OpenGLModShader(const std::string &vs_path, const std::string &fs_path);
+    static OpenGLModShader fromSource(const std::string &vs_src, const std::string &fs_src);
+
     ~OpenGLModShader();
 
     bool isValid() const;

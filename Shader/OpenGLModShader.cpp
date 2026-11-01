@@ -32,6 +32,43 @@ OpenGLModShader::OpenGLModShader(const std::string &vs_path, const std::string &
     shader_program = program;
 }
 
+OpenGLModShader OpenGLModShader::fromSource(const std::string &vs_src, const std::string &fs_src)
+{
+    OpenGLModShader shader;
+    shader.build(vs_src, fs_src);
+    return shader;
+}
+
+bool OpenGLModShader::build(const std::string &vs_src, const std::string &fs_src)
+{
+    unsigned int vs = compile(GL_VERTEX_SHADER, vs_src, "VERTEX");
+    if (!vs) return false;
+
+    unsigned int fs = compile(GL_FRAGMENT_SHADER, fs_src, "FRAGMENT");
+    if (!fs)
+    {
+        glDeleteShader(vs);
+        return false;
+    }
+
+    unsigned int program = glCreateProgram();
+    glAttachShader(program, vs);
+    glAttachShader(program, fs);
+    glLinkProgram(program);
+
+    glDeleteShader(vs);
+    glDeleteShader(fs);
+
+    if (!checkError(program, "program", "SHADERPROGRAM"))
+    {
+        glDeleteProgram(program);
+        return false;
+    }
+
+    shader_program = program;
+    return true;
+}
+
 OpenGLModShader::~OpenGLModShader()
 {
     if (shader_program) glDeleteProgram(shader_program);
